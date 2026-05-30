@@ -1,0 +1,184 @@
+/* Global */
+:root {
+  --font-primary: 'Inter', sans-serif;
+  --text-primary: #fff;
+  --text-secondary: #e0e0e0;
+  --glass-bg: rgba(255,255,255,0.12);
+  --glass-border: rgba(255,255,255,0.2);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(0,0,0,0.25);
+    --text-primary: #fff;
+  }
+}
+
+/* Body */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+}
+
+/* Sky background */
+.sky-bg {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2rem;
+}
+
+/* Animated cloud layer */
+.sky-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1503428593586-e225b39bddfe?auto=format&fit=crop&w=1920&q=80');
+  background-size: cover;
+  opacity: 0.45;
+  animation: moveClouds 60s linear infinite;
+  z-index: -1;
+}
+@keyframes moveClouds {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+/* Glass utility */
+.glass {
+  backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+}
+
+/* Container */
+.app-container {
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* Title */
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Search */
+.search-box {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+.search-input {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.2);
+  color: var(--text-primary);
+  backdrop-filter: blur(8px);
+}
+.search-button {
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 12px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Loader */
+@keyframes spin { to { transform: rotate(360deg); } }
+.loader {
+  width: 45px;
+  height: 45px;
+  margin: 2rem auto;
+  border: 5px solid rgba(255,255,255,0.3);
+  border-top: 5px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Toast */
+.toast {
+  background: rgba(255,0,0,0.2);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  margin: 1rem auto;
+  border-radius: 8px;
+}
+
+/* Suggestion box */
+.suggestion-box {
+  margin: 1rem auto;
+  max-width: 300px;
+  overflow: hidden;
+}
+.suggestion-item {
+  padding: 0.6rem 1rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+/* Forecast carousel */
+.forecast-carousel {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
+}
+.forecast-card {
+  flex: 0 0 100px;
+  text-align: center;
+  scroll-snap-align: start;
+}
+
+/* WeatherCard specific */
+.weather-card {
+  margin: 2rem auto;
+  max-width: 350px;
+  text-align: center;
+  position: relative;
+}
+.weather-icon {
+  width: 120px;
+  height: 120px;
+}
+.rain-overlay {
+  position: absolute;
+  inset: 0;
+  background: url('https://i.ibb.co/7QpKsCX/rain.png');
+  opacity: 0.15;
+  pointer-events: none;
+  animation: rain 0.5s linear infinite;
+}
+@keyframes rain {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}
+
+/* Info grid */
+.info-grid {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.info-box {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 12px;
+  background: var(--glass-bg);
+  margin: 0 0.2rem;
+  text-align: center;
+}
