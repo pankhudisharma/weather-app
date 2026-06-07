@@ -6,7 +6,7 @@ import WeatherCard from "./components/WeatherCard";
 import ForecastCarousel from "./components/ForecastCarousel";
 import DetailsGrid from "./components/DetailsGrid";
 import AITip from "./components/AITip";
-
+const API_BASE = import.meta.env.VITE_API_URL;
 // Helper to map weather condition and temperature to premium Tailwind gradient classes
 function getBackgroundClass(condition, temp) {
   // Premium blue, sky-blue, and white-indigo gradient for home page default
@@ -57,7 +57,11 @@ export default function App() {
     if (!finalCity) return;
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/weather/${finalCity}`);
+      // Try to fetch real weather data
+      const res = await fetch(`${API_BASE}/weather/${finalCity}`);
+      if (!res.ok) {
+        throw new Error('Backend weather request failed');
+      }
       const data = await res.json();
 
       const mapped = {
@@ -74,8 +78,15 @@ export default function App() {
       };
       setWeather(mapped);
 
-      const forecastRes = await fetch(`http://localhost:5000/forecast/${finalCity}`);
-      const forecastData = await forecastRes.json();
+      // Fetch forecast data with fallback
+      const forecastRes = await fetch(`${API_BASE}/forecast/${finalCity}`);
+      let forecastData = { list: [] };
+      if (forecastRes.ok) {
+        forecastData = await forecastRes.json();
+      } else {
+        console.error('Forecast fetch failed', forecastRes.status);
+      }
+
       setForecast(forecastData.list || []);
 
       generateAITip(data.description, data.temperature);
@@ -100,9 +111,8 @@ export default function App() {
 
   return (
     <motion.div
-      className={`min-h-screen w-full flex flex-col items-center justify-start transition-colors duration-700 ${
-        weather ? getBackgroundClass(weather.condition, weather.temperature) : getBackgroundClass()
-      }`}
+      className={`min-h-screen w-full flex flex-col items-center justify-start transition-colors duration-700 ${weather ? getBackgroundClass(weather.condition, weather.temperature) : getBackgroundClass()
+        }`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -136,8 +146,13 @@ export default function App() {
           </motion.div>
         )}
 
-        {weather && (
-          <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
+        {weather && weather.city && (
+          <motion.div
+            layout
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="w-full"
+          >
             <WeatherCard weather={weather} typedCityName={city} />
             <DetailsGrid weather={weather} />
             <AITip tip={aiTip} />

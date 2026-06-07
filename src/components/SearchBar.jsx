@@ -75,7 +75,7 @@ export default function SearchBar({ onSearch }) {
         const { latitude, longitude } = position.coords;
         try {
           const res = await fetch(
-            `http://localhost:5000/geocode?lat=${latitude}&lon=${longitude}`
+            `http://127.0.0.1:5000/geocode?lat=${latitude}&lon=${longitude}`
           );
           const data = await res.json();
           if (data.city) {

@@ -51,11 +51,38 @@ const getIcon = (code) => {
  *   - weather[0].description / icon
  */
 export default function ForecastCarousel({ forecast = [] }) {
-  // Ensure we display exactly five items; already sliced in parent.
-  const items = forecast.slice(0, 5);
+  // Extract one entry per distinct date (OpenWeather provides 3‑hour intervals)
+  const getDailyItems = (list) => {
+  const days = [];
+  const seen = new Set();
+  for (const item of list) {
+    // Prefer the local date string provided by OpenWeather (dt_txt)
+    let dateKey;
+    if (item.dt_txt) {
+      // dt_txt format: "YYYY-MM-DD HH:MM:SS"
+      dateKey = item.dt_txt.split(' ')[0];
+    } else if (item.dt) {
+      // Fallback to UTC conversion of UNIX timestamp
+      dateKey = new Date(item.dt * 1000).toISOString().split('T')[0];
+    } else {
+      continue;
+    }
+    if (!seen.has(dateKey)) {
+      seen.add(dateKey);
+      days.push(item);
+    }
+    if (days.length === 5) break;
+  }
+  return days;
+};
+  const itemsToRender = getDailyItems(forecast);
 
-  const dayName = (dateStr) => {
+  const dayName = (dateStr, index) => {
     const d = new Date(dateStr);
+    if (isNaN(d.getTime())) {
+      // When the API returns a mock or non‑date string, fall back to a simple "Day N" label
+      return `Day ${index + 1}`;
+    }
     return d.toLocaleDateString(undefined, { weekday: 'short' });
   };
 
@@ -66,7 +93,8 @@ export default function ForecastCarousel({ forecast = [] }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      {items.map((item, idx) => (
+            {itemsToRender.map((item, idx) => (
+
         <motion.div
           key={idx}
           className="glass-card w-32 sm:w-36 p-3 flex flex-col items-center justify-center"
@@ -74,7 +102,7 @@ export default function ForecastCarousel({ forecast = [] }) {
           whileTap={{ scale: 0.95 }}
         >
           <div className="text-sm font-medium text-white/70 mb-1">
-            {dayName(item.dt_txt || item.dt * 1000)}
+            {dayName(item.dt_txt || (item.dt ? item.dt * 1000 : ''), idx)}
           </div>
           {getIcon(item.weather?.[0]?.icon?.toLowerCase() || '')}
           <div className="mt-2 text-xl font-bold text-white">

@@ -34,35 +34,39 @@ function App() {
   const getWeather = async (selectedCity) => {
     const finalCity = selectedCity || city;
     if (!finalCity) return;
-    setLoading(true);
-    try {
-      const res = await fetch(`http://localhost:5000/weather/${finalCity}`);
-      const data = await res.json();
-      // Map backend data to WeatherCard expected shape
-      const mapped = {
-        city: data.city,
-        country: data.country || "",
-        temperature: data.temperature,
-        feelsLike: data.feels_like,
-        condition: data.description,
-        conditionCode: data.icon,
-        humidity: data.humidity,
-        windSpeed: data.wind,
-        pressure: data.pressure || 1013,
-        uvIndex: data.uv || 0,
-      };
-      setWeather(mapped);
-      const forecastRes = await fetch(`http://localhost:5000/forecast/${finalCity}`);
-      const forecastData = await forecastRes.json();
-      setForecast(forecastData.list || []);
-      generateAITip(data.description, data.temperature);
-      setSuggestions([]);
-    } catch (err) {
-      console.log(err);
-    }
-    setLoading(false);
-  };
 
+    setLoading(true);
+    setError("");
+
+    try {
+      const res = await fetch(`http://localhost:5000/weather/${city}`);
+      const data = await res.json();
+
+      if (!data.success) {
+        setError(data.message);
+        setWeather(null);
+        setLoading(false);
+        return;
+      }
+
+      setWeather({
+        city: data.city,
+        temperature: data.temperature,
+        feels_like: data.feels_like,
+        humidity: data.humidity,
+        wind: data.wind,
+        description: data.description,
+        icon: data.icon
+      });
+
+      setLoading(false);
+
+    } catch (err) {
+      setError("Something went wrong");
+      setWeather(null);
+      setLoading(false);
+    }
+  };
   const generateAITip = (desc, temp) => {
     if (!desc) return;
     desc = desc.toLowerCase();
