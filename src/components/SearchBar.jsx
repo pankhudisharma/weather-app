@@ -103,15 +103,15 @@ export default function SearchBar({ onSearch }) {
     <div className="relative w-full" ref={containerRef}>
       <form
         onSubmit={handleSubmit}
-        className="search-bar glass-card p-3 rounded-xl flex items-center gap-2"
+        className="search-bar glass-card p-3 rounded-xl flex items-center gap-2 bg-black/30"
       >
-        <Search className="w-5 h-5 text-white/60" />
+        <Search className="w-5 h-5 text-white/80" />
         <input
           type="text"
           placeholder="Enter city…"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 bg-transparent text-white placeholder-white/40 outline-none"
+          className="flex-1 bg-white/20 text-white placeholder-white/60 outline-none"
           onFocus={() => input && setShowDropdown(filtered.length > 0)}
         />
         <button
@@ -129,7 +129,7 @@ export default function SearchBar({ onSearch }) {
         </button>
         <button
           type="submit"
-          className="px-3 py-1 bg-sky-500/30 hover:bg-sky-500/50 text-white rounded-md transition"
+          className="px-3 py-1 bg-gray-800/70 hover:bg-gray-800/90 text-white rounded-md transition"
         >
           Search
         </button>

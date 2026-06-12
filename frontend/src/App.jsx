@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import WeatherCard from "./WeatherCard";
+import WeatherCard from "../../src/components/WeatherCard";
 import ForecastCarousel from "./components/ForecastCarousel";
 import SearchBar from "./components/SearchBar";
 
@@ -9,6 +9,7 @@ function App() {
   const [forecast, setForecast] = useState([]);
   const [loading, setLoading] = useState(false);
   const [aiTip, setAiTip] = useState("");
+  const [error, setError] = useState("");
   const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
@@ -39,7 +40,9 @@ function App() {
     setError("");
 
     try {
-      const res = await fetch(`http://localhost:5000/weather/${city}`);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      console.log('🔧 Using API_URL:', API_URL);
+      const res = await fetch(`${API_URL}/weather/${finalCity}`);
       const data = await res.json();
 
       if (!data.success) {
@@ -88,10 +91,14 @@ function App() {
   return (
     <div className="sky-bg">
       <div className="app-container">
-        <h1 className="title">🌍 WeatherX Ultimate</h1>
-        <SearchBar onSearch={getWeather} />
+import DateTimeDisplay from "../../src/components/DateTimeDisplay";
 
-        {loading && <div className="loader" />}
+// after title
+<h1 className="title">🌍 WeatherX Ultimate</h1>
+<DateTimeDisplay />
+<SearchBar onSearch={getWeather} />
+
+        {error && <div className="text-red-500 mt-2 text-center">{error}</div>}
 
         {weather && <WeatherCard weather={weather} aiTip={aiTip} typedCityName={city} />}
 

@@ -1,6 +1,7 @@
 require("dotenv").config({ path: require('path').resolve(__dirname, '../../.env') });
-
-
+// Use WEATHER_API_KEY if API_KEY is not set
+const API_KEY = process.env.API_KEY || process.env.WEATHER_API_KEY;
+console.log("✅ Backend initialized – API_KEY present:", !!API_KEY);
 const Search = require("./models/Search");
 
 const mongoose = require("mongoose");
@@ -20,18 +21,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
   console.log("Server running on port", PORT);
 });
-const API_KEY = process.env.API_KEY;
+
 
 // 🌤️ CURRENT WEATHER
 app.get("/weather/:city", async (req, res) => {
   try {
     const city = req.params.city;
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.API_KEY}&units=metric`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
     console.log("Fetching weather:", url);
     const response = await fetch(url);
     console.log("Weather API response status:", response.status);

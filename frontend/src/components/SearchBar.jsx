@@ -13,6 +13,7 @@ function useDebounce(value, delay) {
 
 export default function SearchBar({ onSearch }) {
   const [input, setInput] = useState('');
+
   const debouncedInput = useDebounce(input, 300);
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export default function SearchBar({ onSearch }) {
         placeholder="Search city..."
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        className="flex-1 bg-transparent text-white placeholder-white/50 focus:outline-none"
+        className="flex-1 bg-transparent border-none outline-none text-white placeholder:text-white/50"
       />
       <button
         type="submit"

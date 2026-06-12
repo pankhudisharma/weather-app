@@ -9,38 +9,28 @@ export default function DetailsGrid({ weather }) {
     {
       label: "Feels Like",
       value: `${weather.feelsLike}°C`,
-      icon: <Thermometer className="w-5 h-5 text-sky-300" />,
-      color: "from-amber-500/10 to-orange-500/10",
+      icon: <Thermometer className="w-5 h-5 text-sky-300" />, 
     },
     {
       label: "Humidity",
       value: `${weather.humidity}%`,
-      icon: <Droplets className="w-5 h-5 text-sky-300" />,
-      color: "from-blue-500/10 to-indigo-500/10",
+      icon: <Droplets className="w-5 h-5 text-sky-300" />, 
     },
     {
       label: "Wind Speed",
       value: `${weather.windSpeed} km/h`,
-      icon: <Wind className="w-5 h-5 text-sky-300 animate-pulse" />,
-      color: "from-teal-500/10 to-emerald-500/10",
+      icon: <Wind className="w-5 h-5 text-sky-300 animate-pulse" />, 
     },
     {
-      label: "Pressure",
-      value: `${weather.pressure} hPa`,
-      icon: <Compass className="w-5 h-5 text-sky-300" />,
-      color: "from-purple-500/10 to-pink-500/10",
-    },
-    {
-      label: "UV Index",
-      value: weather.uvIndex || 0,
-      icon: <Sun className="w-5 h-5 text-amber-300" />,
-      color: "from-yellow-500/10 to-amber-500/10",
+      label: "Visibility",
+      value: `${weather.visibility || 'N/A'}`,
+      icon: <Compass className="w-5 h-5 text-sky-300" />, 
     },
   ];
 
   return (
     <motion.div
-      className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mt-6"
+      className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 gap-4 mt-6 justify-center mx-auto"
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: 0.1 }}

@@ -6,22 +6,20 @@ export default function Header() {
     document.documentElement.classList.toggle("dark");
   };
 
-  const isDark =
-    typeof window !== "undefined" &&
-    document.documentElement.classList.contains("dark");
+  const isDark = typeof window !== "undefined" && document.documentElement.classList.contains("dark");
 
   return (
-    <header className="w-full flex items-center justify-between px-6 md:px-12 py-4">
+    <header className="w-full flex flex-col items-center justify-between px-6 md:px-12 py-4">
       <motion.h1
-        className="text-4xl md:text-5xl font-extrabold text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
+        className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]"
         initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         Aerosky
       </motion.h1>
-
-      <div className="flex items-center gap-3">
+      <p className="mt-2 text-lg md:text-xl text-white/80">Real-time weather, beautifully simple.</p>
+      <div className="flex items-center gap-3 mt-4">
         {/* Theme Toggle Button */}
         <button
           onClick={toggleTheme}

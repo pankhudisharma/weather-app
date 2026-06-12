@@ -122,7 +122,7 @@ export default function WeatherCard({ weather, typedCityName }) {
             <span className="text-2xl sm:text-3xl font-bold text-sky-300 mt-1">°C</span>
           </div>
           
-          <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-sky-200">
+          <div className="inline-flex items-center px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-sky-600">
             {condition}
           </div>
         </div>

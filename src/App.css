@@ -1,1 +1,160 @@
-/* Cleared default boilerplate App.css styles */
+/* ----------------------------------------------------------
+   Aerosky Premium Weather App – Design System (CSS)
+   ---------------------------------------------------------- */
+
+/* ---- Color Palette (CSS variables) ---- */
+:root {
+  --c-sky-start: #DCEBFF;      /* pastel sky blue */
+  --c-sky-end: #F6F7C4;        /* warm yellow‑green */
+  --c-dark: #222222;           /* primary dark text */
+  --c-accent: #74C0FC;        /* light‑blue accent */
+  --c-accent-dark: #355e9c;   /* darker accent for buttons */
+  --c-glass-bg: rgba(255,255,255,0.12);
+  --c-glass-border: rgba(255,255,255,0.18);
+  --c-glass-hover: rgba(255,255,255,0.10);
+  --c-shadow: rgba(0,0,0,0.07);
+}
+
+/* Global reset and typography */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  color: var(--c-dark); /* dark text for readability */
+}
+
+
+h1.title {
+  font-size: 4rem; /* large logo */
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  margin-bottom: 0.5rem;
+}
+
+/* ---- Glassmorphism Utility ---- */
+.glass-card {
+  color: var(--c-dark);
+}
+
+.search-bar input {
+  color: var(--c-dark);
+}
+
+.detail-card {
+  color: var(--c-dark);
+}
+
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  border-color: rgba(255,255,255,0.25);
+}
+
+/* ---- Layout Containers ---- */
+.sky-bg {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  transition: background 0.5s ease;
+}
+
+.app-container {
+  width: 90%;
+  max-width: 1440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* ---- Search Bar (already uses .glass-card) ---- */
+.search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 0.4rem 0.8rem;
+}
+
+.search-bar input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-btn {
+  background: linear-gradient(135deg, var(--c-accent-dark), #2a6ab9);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.search-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ---- Detail Cards (used in DetailsGrid) ---- */
+.detail-card {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.detail-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+/* ---- Animations ---- */
+@keyframes buoy {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* Apply buoy to weather icons (WeatherCard) */
+.weather-icon {
+  animation: buoy 6s ease-in-out infinite;
+}
+
+/* ---- Responsive Adjustments ---- */
+@media (max-width: 640px) {
+  h1.title { font-size: 3rem; }
+  .app-container { width: 95%; }
+  .glass-card { padding: 1.5rem; }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .app-container { width: 85%; }
+}
+
+/* ---- Utility Classes (optional) ---- */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+
+/* Override Tailwind white text utilities for dark mode */
+.text-white, .text-white\/90, .text-white\/80, .text-white\/70, .text-white\/60, .text-white\/50, .text-white\/40, .text-white\/30, .text-white\/20, .text-white\/10 {
+  color: var(--c-dark) !important;
+}
+
