@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import WeatherCard from "../../src/components/WeatherCard";
+import WeatherCard from "./components/WeatherCard";
 import ForecastCarousel from "./components/ForecastCarousel";
-import SearchBar from "./components/SearchBar";
+import DateTimeDisplay from "./components/DateTimeDisplay";
 
 function App() {
   const [weather, setWeather] = useState(null);
@@ -91,12 +91,9 @@ function App() {
   return (
     <div className="sky-bg">
       <div className="app-container">
-import DateTimeDisplay from "../../src/components/DateTimeDisplay";
-
-// after title
-<h1 className="title">🌍 WeatherX Ultimate</h1>
-<DateTimeDisplay />
-<SearchBar onSearch={getWeather} />
+        <h1 className="title">🌍 WeatherX Ultimate</h1>
+        <DateTimeDisplay />
+        <SearchBar onSearch={getWeather} />
 
         {error && <div className="text-red-500 mt-2 text-center">{error}</div>}
 
