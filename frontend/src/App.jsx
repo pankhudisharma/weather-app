@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import WeatherCard from "./components/WeatherCard";
 import ForecastCarousel from "./components/ForecastCarousel";
 import DateTimeDisplay from "./components/DateTimeDisplay";
+import SearchBar from "./components/SearchBar";
 
 function App() {
   const [weather, setWeather] = useState(null);
